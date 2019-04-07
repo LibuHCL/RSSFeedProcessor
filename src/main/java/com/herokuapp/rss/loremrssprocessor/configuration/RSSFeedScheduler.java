@@ -28,7 +28,7 @@ public class RSSFeedScheduler {
   private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
   @Value("${rssfeed.url}")
-  private static final String rssFeedUrl = "https://lorem-rss.herokuapp.com/feed?unit=second";
+  private static String rssFeedUrl = "https://lorem-rss.herokuapp.com/feed?unit=second";
 
   @Scheduled(fixedDelay = 180000)
   public void getLoremRSSFeed() throws IOException {

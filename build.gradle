@@ -9,7 +9,6 @@ buildscript {
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.1.RELEASE")
     classpath "io.spring.gradle:dependency-management-plugin:1.0.7.RELEASE"
-    classpath "com.h2database:h2:1.4.199"
   }
 }
 
@@ -55,6 +54,7 @@ dependencies {
   compile("org.springframework.boot:spring-boot-starter-hateoas")
   compile("org.springframework.boot:spring-boot-starter-test")
   compile("org.springframework.boot:spring-boot-starter-jdbc")
+  compile("org.springframework.boot:spring-boot-devtools")
   compile 'com.google.guava:guava:19.0'
   compile 'org.springframework:spring-context'
   compile 'com.h2database:h2:1.4.199'
@@ -64,8 +64,7 @@ dependencies {
   compile 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
   testCompile("junit:junit:4.12")
 
-
-  providedRuntime "com.h2database:h2:1.4.199"
+  
   providedRuntime 'commons-dbcp:commons-dbcp:1.4'
 }
 dependencies {
@@ -73,6 +72,6 @@ dependencies {
 }
 
 sourceSets.main.resources {
-  srcDirs = ['src/main/java']
+  srcDirs = ['src/main/java','src/main/resources']
 }
 
