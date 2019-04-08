@@ -30,7 +30,10 @@ public class RSSFeedScheduler {
   @Value("${rssfeed.url}")
   private static String rssFeedUrl = "https://lorem-rss.herokuapp.com/feed?unit=second";
 
-  @Scheduled(fixedDelay = 180000)
+  @Value("${rssfeed.interval}")
+  public static final long rssFeedInterval = 300000;
+
+  @Scheduled(fixedDelay = rssFeedInterval)
   public void getLoremRSSFeed() throws IOException {
     logger.info("RSSFeed Feed polling :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
     getRSSFeed();

@@ -51,10 +51,8 @@ dependencies {
   annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
   testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
   compile("org.springframework.boot:spring-boot-starter-web")
-  compile("org.springframework.boot:spring-boot-starter-hateoas")
   compile("org.springframework.boot:spring-boot-starter-test")
   compile("org.springframework.boot:spring-boot-starter-jdbc")
-  compile("org.springframework.boot:spring-boot-devtools")
   compile 'com.google.guava:guava:19.0'
   compile 'org.springframework:spring-context'
   compile 'com.h2database:h2:1.4.199'
@@ -63,7 +61,7 @@ dependencies {
   compile 'org.json:json:20180813'
   compile 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
   testCompile("junit:junit:4.12")
-
+  compile group: "com.h2database", name: "h2"
   
   providedRuntime 'commons-dbcp:commons-dbcp:1.4'
 }
