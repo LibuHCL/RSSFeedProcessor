@@ -8,11 +8,13 @@ import java.net.URLConnection;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import com.herokuapp.rss.loremrssprocessor.service.RSSFeedService;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 import org.json.XML;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -28,18 +30,22 @@ public class RSSFeedScheduler {
   private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
   @Value("${rssfeed.url}")
-  private static String rssFeedUrl = "https://lorem-rss.herokuapp.com/feed?unit=second";
+  private static String rssFeedUrl = "https://lorem-rss.herokuapp.com/feed";
 
   @Value("${rssfeed.interval}")
   public static final long rssFeedInterval = 300000;
 
+  @Autowired
+  RSSFeedService rssFeedService;
+
   @Scheduled(fixedDelay = rssFeedInterval)
   public void getLoremRSSFeed() throws IOException {
     logger.info("RSSFeed Feed polling :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
-    getRSSFeed();
+    RssFeed rssFeed=getRSSFeedsFromUrl();
+    rssFeedService.insertRSSFeed(rssFeed);
   }
 
-  protected RssFeed getRSSFeed() throws IOException {
+  protected RssFeed getRSSFeedsFromUrl() throws IOException {
     TypeReference<RssFeed> typeReference = new TypeReference<RssFeed>() {
     };
     InputStream xml = getInputStreamFromURL(rssFeedUrl);
