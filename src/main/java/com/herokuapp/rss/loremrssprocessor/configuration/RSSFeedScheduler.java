@@ -8,7 +8,6 @@ import java.net.URLConnection;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import com.herokuapp.rss.loremrssprocessor.service.RSSFeedService;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 import org.json.XML;
@@ -23,17 +22,22 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.herokuapp.rss.loremrssprocessor.model.RssFeed;
+import com.herokuapp.rss.loremrssprocessor.service.RSSFeedService;
 
 @Component
 public class RSSFeedScheduler {
   private static final Logger logger = LoggerFactory.getLogger(RSSFeedScheduler.class);
   private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-  @Value("${rssfeed.url}")
-  private static String rssFeedUrl = "https://lorem-rss.herokuapp.com/feed";
+  private final String rssFeedUrl;
+
+  @Autowired
+  public RSSFeedScheduler(@Value("${rssfeed.url}") String rssFeedUrl) {
+    this.rssFeedUrl = rssFeedUrl;
+  }
 
   @Value("${rssfeed.interval}")
-  public static final long rssFeedInterval = 300000;
+  public static final long rssFeedInterval = 60000;
 
   @Autowired
   RSSFeedService rssFeedService;
@@ -41,7 +45,7 @@ public class RSSFeedScheduler {
   @Scheduled(fixedDelay = rssFeedInterval)
   public void getLoremRSSFeed() throws IOException {
     logger.info("RSSFeed Feed polling :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
-    RssFeed rssFeed=getRSSFeedsFromUrl();
+    RssFeed rssFeed = getRSSFeedsFromUrl();
     rssFeedService.insertRSSFeed(rssFeed);
   }
 
