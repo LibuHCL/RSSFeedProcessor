@@ -37,12 +37,12 @@ public class RSSFeedController {
   @GetMapping(value = "/feeds", produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
   public ResponseEntity<List<Rss>> getAllLoreamRSSFeeds() {
-    List<Rss> feeds = rssFeedService.getAllFeeds();
+    Rss feeds = rssFeedService.getAllFeeds();
     if (feeds == null) {
       logger.debug("Feeds with channel not found at '{}'", LocalDate.now());
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    return new ResponseEntity<List<Rss>>(feeds, HttpStatus.OK);
+    return new ResponseEntity(feeds, HttpStatus.OK);
   }
 
   @RequestMapping(value = "/**")
