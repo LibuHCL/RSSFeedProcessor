@@ -29,12 +29,10 @@ apply plugin: 'io.spring.dependency-management'
 
 
 bootWar {
-  version = '0.1.0'
   enabled = true
 }
 
 group = 'com.herokuapp.rss'
-version = '0.0.1-SNAPSHOT'
 
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
@@ -62,7 +60,7 @@ dependencies {
   compile 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
   testCompile("junit:junit:4.12")
   compile group: "com.h2database", name: "h2"
-  
+
   providedRuntime 'commons-dbcp:commons-dbcp:1.4'
 }
 dependencies {
@@ -70,6 +68,6 @@ dependencies {
 }
 
 sourceSets.main.resources {
-  srcDirs = ['src/main/java','src/main/resources']
+  srcDirs = ['src/main/java', 'src/main/resources']
 }
 

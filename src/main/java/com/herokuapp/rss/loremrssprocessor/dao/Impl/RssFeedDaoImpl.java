@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.herokuapp.rss.loremrssprocessor.dao.RSSFeedDao;
 import com.herokuapp.rss.loremrssprocessor.model.Channel;
 import com.herokuapp.rss.loremrssprocessor.model.Item;
+import com.herokuapp.rss.loremrssprocessor.model.Rss;
 import com.herokuapp.rss.loremrssprocessor.model.RssFeed;
 
 @Repository
@@ -46,5 +47,10 @@ public class RssFeedDaoImpl implements RSSFeedDao {
                 return itemList.size();
             }
         });
+    }
+
+    @Override
+    public List<Rss> getRSSFeed() {
+        return null;
     }
 }
