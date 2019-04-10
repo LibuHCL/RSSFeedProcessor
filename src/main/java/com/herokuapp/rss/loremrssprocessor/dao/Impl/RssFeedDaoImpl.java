@@ -30,9 +30,12 @@ public class RssFeedDaoImpl implements RSSFeedDao {
     String rssSaveQuery = "INSERT INTO RSSCHANNELFEED " +
         "(COPYRIGHT, LASTBUILDDATE, LINK, DESCRIPTION, GENERATOR, TITLE, PUBLISHED_DATE, TTL) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     String rssItemQuery = "INSERT INTO RSSCHANNELITEM " +
-        "(LINK, DESCRIPTION, TITLE, PUBLISHED_DATE, GUID_CONTENT) VALUES (?, ?, ?, ?, ?)";
+        "(LINK, DESCRIPTION, TITLE, PUBLISHED_DATE, GUID_CONTENT, FEED_ID) VALUES (?, ?, ?, ?, ?, ?)";
+    String currentFeedIdQuery = "SELECT FEED_ID FROM RSSCHANNELFEED ORDER BY FEED_ID DESC LIMIT ?";
     jdbcTemplate.update(rssSaveQuery, channel.getCopyright(), channel.getLastBuildDate(), channel.getLink(), channel.getDescription(), channel.getGenerator(),
         channel.getTitle(), channel.getPubDate(), channel.getTtl());
+    Integer currentFeedId = (Integer) jdbcTemplate.queryForObject(
+        currentFeedIdQuery, new Object[]{ 1 }, Integer.class);
     jdbcTemplate.batchUpdate(rssItemQuery, new BatchPreparedStatementSetter() {
       @Override
       public void setValues(PreparedStatement ps, int i) throws SQLException {
@@ -42,6 +45,7 @@ public class RssFeedDaoImpl implements RSSFeedDao {
         ps.setString(3, item.getTitle());
         ps.setString(4, item.getPubDate());
         ps.setString(5, item.getGuid().getContent());
+        ps.setInt(6, currentFeedId);
       }
 
       @Override

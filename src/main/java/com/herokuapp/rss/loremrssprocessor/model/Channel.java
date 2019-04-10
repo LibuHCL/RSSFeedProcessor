@@ -37,8 +37,11 @@ public class Channel {
   private String title;
   @JsonProperty("pubDate")
   private String pubDate;
+
   @JsonProperty("ttl")
   private Integer ttl;
+
+  private Integer feedId;
 
   @JsonProperty("copyright")
   public String getCopyright() {
@@ -128,5 +131,13 @@ public class Channel {
   @JsonProperty("ttl")
   public void setTtl(Integer ttl) {
     this.ttl = ttl;
+  }
+
+  public Integer getFeedId() {
+    return feedId;
+  }
+
+  public void setFeedId(final Integer feedId) {
+    this.feedId = feedId;
   }
 }
